@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: marciosbicigo/mybudget-api:1.1
+        env:
+        - name: MONGO_URI
+          value: "mongodb://mongodb:27017/"
+        - name: REDIS_URI
+          value: "redis://redis:6379"
+        - name: SECRET_KEY
+          value: "xLzLlIoTdEY8rBDgMuyM9WXDXcaoga/gAJfA0D1vF9E=internal"
+        ports:
+        - containerPort: 8081
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "500m"
+          limits:
+            memory: "512Mi"
+            cpu: "1000m"
