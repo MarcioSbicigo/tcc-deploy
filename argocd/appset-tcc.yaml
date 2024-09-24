@@ -2,10 +2,11 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: tcc-apps
+  namespace: argocd
 spec:
   generators:
     - git:
-        repoURL: https://github.com/MarcioSbicigo/mybudget-deploy.git
+        repoURL: https://github.com/MarcioSbicigo/tcc-deploy.git
         revision: HEAD
         directories:
           - path: apps/*
@@ -15,11 +16,11 @@ spec:
     spec:
       destination:
         name: ''
-        namespace: argocd
+        namespace: tcc
         server: https://kubernetes.default.svc
       source:
         path: '{{path}}'
-        repoURL: https://github.com/MarcioSbicigo/mybudget-deploy.git
+        repoURL: https://github.com/MarcioSbicigo/tcc-deploy.git
         targetRevision: HEAD
       project: default
       syncPolicy:
@@ -27,4 +28,4 @@ spec:
           prune: true
           selfHeal: true
         syncOptions:
-          - CreateNamespace=true
+          - CreateNamespace=true 
